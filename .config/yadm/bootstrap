@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Brew
+system_type=$(uname -s)
+
+if [ "$system_type" = "Darwin" ]; then
+
+  if [ -f "$HOME/.config/brew/Brewfile" ]; then
+    echo "Updating homebrew bundle"
+    brew bundle --file="$HOME/.config/brew/Brewfile"
+  fi
+
+fi
+
+# iterm
+# ref: https://shyr.io/blog/sync-iterm2-configs
+defaults write com.googlecode.iterm2 PrefsCustomFolder "$HOME/.config/iterm2"
+defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+
+# Activate fish
+echo "Activate fish"
+echo $(which fish) | sudo tee -a /etc/shells > /dev/null
+chsh -s $(which fish)
+
+# Install volta
+fish -c 'curl https://get.volta.sh | bash'
+
+fish -c 'source $HOME/.config/fish/config.fish'
+
+fish -c 'volta install node'
+fish -c 'volta install yarn'
+
+# Install fisher
+fish -c 'curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher'
+fish -c 'fisher update'
+
+# Install topics
+fish -c 'dft install'

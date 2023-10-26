@@ -1,0 +1,17 @@
+[core]
+	pager = diff-so-fancy | less --tabs=4 -RFX
+	ignorecase = false
+	editor = nano
+	excludesfile = ~/.config/git/ignore
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[user]
+	name = Oleg Pimenov
+	email = 567760+pimenovoleg@users.noreply.github.com
+[credential]
+	helper = osxkeychain
+[init]
+	defaultBranch = main
